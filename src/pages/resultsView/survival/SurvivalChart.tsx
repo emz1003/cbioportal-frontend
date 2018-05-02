@@ -17,7 +17,8 @@ import {
 } from "./SurvivalUtil";
 import CBIOPORTAL_VICTORY_THEME, {baseLabelStyles} from "../../../shared/theme/cBioPoralTheme";
 import { toConditionalPrecision } from 'shared/lib/NumberUtils';
-import {getPatientViewUrl} from "../../../shared/api/urls";
+import { VictoryAxis, VictoryChart, VictoryLegend, VictoryLine, VictoryScatter, VictoryZoomContainer } from 'victory';
+import { getPatientViewUrl } from "../../../shared/api/urls";
 import DownloadControls from "../../../shared/components/downloadControls/DownloadControls";
 import autobind from "autobind-decorator";
 import {AnalysisGroup} from "../../studyView/StudyViewPageStore";
@@ -75,19 +76,19 @@ export default class SurvivalChart extends React.Component<ISurvivalChartProps, 
     private styleOptsDefaultProps:any = {
         width: 900,
         height: 500,
-        padding: {top: 20, bottom: 50, left: 60, right: 20},
+        padding: { top: 20, bottom: 50, left: 60, right: 20 },
         axis: {
             x: {
                 axisLabel: {
                     padding: 35
                 },
-                grid: {opacity: 0}
+                grid: { opacity: 0 }
             },
             y: {
                 axisLabel: {
                     padding: 45, fill: "black"
                 },
-                grid: {opacity: 0}
+                grid: { opacity: 0 }
 
             }
         },
@@ -303,10 +304,10 @@ export default class SurvivalChart extends React.Component<ISurvivalChartProps, 
     }
 
     @autobind
-    private hoverCircleFillOpacity(datum:any, active:any) {
+    private hoverCircleFillOpacity(datum: any, active: any) {
         if (active ||
             (this.isTooltipHovered && this.tooltipModel &&
-            this.tooltipModel.datum.studyId === datum.studyId &&
+                this.tooltipModel.datum.studyId === datum.studyId &&
                 this.tooltipModel.datum.patientId === datum.patientId)) {
             return 0.3;
         } else {
