@@ -247,14 +247,14 @@ export default class SurvivalChart extends React.Component<ISurvivalChartProps, 
                     }
 
                     <VictoryChart containerComponent={<VictoryZoomContainer responsive={false}
-                        onZoomDomainChange={_.debounce((domain: any) => {
-                            this.scatterFilter = domain;
-                        }, 1000)}
-                        containerRef={(ref: any) => this.svgContainer = ref} />}
-                        height={this.styleOpts.height} width={this.styleOpts.width}
-                        padding={this.styleOpts.padding}
-                        theme={CBIOPORTAL_VICTORY_THEME}
-                        domainPadding={{ x: [10, 50], y: [20, 20] }}>
+                                                                            onZoomDomainChange={_.debounce((domain: any) => {
+                                                                                this.scatterFilter = domain;
+                                                                            }, 1000)}
+                                                                            containerRef={(ref: any) => this.svgContainer = ref}/>}
+                                  height={this.styleOpts.height} width={this.styleOpts.width}
+                                  padding={this.styleOpts.padding}
+                                  theme={CBIOPORTAL_VICTORY_THEME}
+                                  domainPadding={{x: [10, 50], y: [20, 20]}}>
                         <VictoryAxis style={this.styleOpts.axis.x} crossAxis={false} tickCount={11}
                             label={this.props.xAxisLabel} />
                         <VictoryAxis label={this.props.yAxisLabel} dependentAxis={true} tickFormat={(t: any) => `${t}%`}
