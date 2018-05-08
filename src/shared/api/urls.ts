@@ -119,6 +119,14 @@ export function getStudyDownloadListUrl(){
     return cbioUrl('proxy/download.cbioportal.org/study_list.json');
 }
 
+export function getSessionServiceUrl(){
+    return cbioUrl('api-legacy/proxy/session/main_session');
+}
+
+
+export function getBitlyServiceUrl(){
+    return cbioUrl('api-legacy/proxy/bitly');
+}
 export function getBasePath(){
     return AppConfig.baseUrl!.replace(/[^\/]*/,"");
 }
