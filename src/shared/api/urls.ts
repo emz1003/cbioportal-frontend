@@ -205,7 +205,6 @@ export function getMDAndersonHeatmapStudyMetaUrl(studyId:string){
 export function getMDAndersonHeatmapStudyUrl(studyId:string){
     return AppConfig.serverConfig.mdacc_heatmap_study_url + studyId;
 }
-
 export function getBasePath(){
     return AppConfig.baseUrl!.replace(/[^\/]*/,"");
 }
