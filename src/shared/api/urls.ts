@@ -181,6 +181,7 @@ export function getStudyDownloadListUrl(){
     return buildCBioPortalAPIUrl('proxy/download.cbioportal.org/study_list.json');
 }
 
+
 export function getBitlyServiceUrl(){
     return buildCBioPortalAPIUrl('api-legacy/proxy/bitly');
 }

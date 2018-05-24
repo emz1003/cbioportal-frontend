@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'mobx-react';
 import { hashHistory, browserHistory, createMemoryHistory, Router, useRouterHistory } from 'react-router';
 import { createHistory } from 'history'
-import { RouterStore, syncHistoryWithStore  } from 'mobx-react-router';
+import { RouterStore, syncHistoryWithStore } from 'mobx-react-router';
 import ExtendedRoutingStore from './shared/lib/ExtendedRouterStore';
 import {
     fetchServerConfig,
@@ -60,7 +60,7 @@ if (!window.hasOwnProperty("jQuery")) {
 
 // write browser name, version to brody tag
 if (browser) {
-    $(document).ready(()=>{
+    $(document).ready(() => {
         $("body").addClass(browser.name);
     });
 }
@@ -100,7 +100,7 @@ const syncedHistory = syncHistoryWithStore(history, routingStore);
 const stores = {
     // Key can be whatever you want
     routing: routingStore,
-    appStore:new AppStore()
+    appStore: new AppStore()
 };
 
 window.globalStores = stores;
@@ -149,7 +149,7 @@ let render = () => {
                 history={syncedHistory} routes={makeRoutes()} >
             </Router>
         </Provider>
-    , rootNode);
+        , rootNode);
 
 
 };
@@ -174,7 +174,7 @@ $(document).ready(async () => {
 
     initializeAPIClients();
 
-    initializeAppStore(stores.appStore,config);
+    initializeAppStore(stores.appStore, config);
 
     render();
 

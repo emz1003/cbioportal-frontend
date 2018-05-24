@@ -33,7 +33,7 @@ import FAQ from 'bundle-loader?lazy!babel-loader!./pages/staticPages/faq/FAQ';
 import OQL from 'bundle-loader?lazy!babel-loader!./pages/staticPages/oql/OQL';
 
 
-import {getBasePath} from "shared/api/urls";
+import { getBasePath } from "shared/api/urls";
 import $ from "jquery";
 import ExtendedRouterStore from "shared/lib/ExtendedRouterStore";
 import getBrowserWindow from "shared/lib/getBrowserWindow";
@@ -59,7 +59,7 @@ var defaultRoute = window.defaultRoute || '/home';
 
 var restoreRoute = inject("routing")(restoreRouteAfterRedirect);
 
-let getBlankPage = function(){
+let getBlankPage = function () {
     return <div />
 }
 
@@ -81,17 +81,17 @@ function handleEnter(){
 // we want to preload ResultsViewPage to prevent delay due to lazy loading bundle
 // note: because we bundle, and bundles are loaded async, this does NOT affect time to render of default route
 // results will load in background while user plays with query interface
-function preloadImportantComponents(){
+function preloadImportantComponents() {
     lazyLoadComponent(ResultsViewPage).call();
     lazyLoadComponent(StudyViewPage).call();
 }
 
 export const makeRoutes = (routing) => {
     return (<Route path="/" component={Container}>
-                <IndexRoute onEnter={()=>{$(document).scrollTop(0);}} getComponent={lazyLoadComponent(Homepage,preloadImportantComponents)}/>
-                <Route path="/restore" onEnter={()=>{$(document).scrollTop(0)}} component={restoreRoute}/>
+        <IndexRoute onEnter={() => { $(document).scrollTop(0); }} getComponent={lazyLoadComponent(Homepage, preloadImportantComponents)} />
+        <Route path="/restore" onEnter={() => { $(document).scrollTop(0) }} component={restoreRoute} />
 
-                <Route path="/results/legacy_submission" onEnter={handleLegacySubmission} component={getBlankPage()} />
+        <Route path="/results/legacy_submission" onEnter={handleLegacySubmission} component={getBlankPage()} />
 
                 <Route path="/results(/:tab)" onEnter={()=>{$(document).scrollTop(0)}} getComponent={lazyLoadComponent(ResultsViewPage)} />
                 <Route path="/patient(/:tab)" onEnter={()=>{$(document).scrollTop(0)}} getComponent={lazyLoadComponent(PatientViewPage)}/>
@@ -123,7 +123,7 @@ export const makeRoutes = (routing) => {
 
 
 
-                <Route path="*" onEnter={()=>{$(document).scrollTop(0)}} component={()=><PageNotFound/>}/>
+        <Route path="*" onEnter={() => { $(document).scrollTop(0) }} component={() => <PageNotFound />} />
 
 
     </Route>)
