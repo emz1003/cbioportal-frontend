@@ -1,3 +1,4 @@
+import {CoExpression} from "../../../shared/api/generated/CBioPortalAPIInternal";
 export const CORR_POS_COLOR = "rgb(41, 87, 41)";
 export const CORR_NEG_COLOR = "rgb(180, 4, 4)";
 
