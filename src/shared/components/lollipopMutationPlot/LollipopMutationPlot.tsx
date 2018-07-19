@@ -29,7 +29,6 @@ export interface ILollipopMutationPlotProps extends IProteinImpactTypeColors
 {
     store:MutationMapperStore;
     onXAxisOffset?:(offset:number)=>void;
-    svgToPdfServiceUrl?: string;
     geneWidth:number;
     trackVisibility?: TrackVisibility;
     trackDataStatus?: TrackDataStatus;
