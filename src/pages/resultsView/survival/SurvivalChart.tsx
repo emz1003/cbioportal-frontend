@@ -16,7 +16,11 @@ import {
 } from "./SurvivalUtil";
 import CBIOPORTAL_VICTORY_THEME from "../../../shared/theme/cBioPoralTheme";
 import { toConditionalPrecision } from 'shared/lib/NumberUtils';
+<<<<<<< HEAD
 import { getPatientViewUrl } from "../../../shared/api/urls";
+=======
+import {getPatientViewUrl} from "../../../shared/api/urls";
+>>>>>>> Collapse DownloadControls into hoverable icon
 import DownloadControls from "../../../shared/components/downloadControls/DownloadControls";
 import autobind from "autobind-decorator";
 
