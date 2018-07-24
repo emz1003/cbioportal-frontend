@@ -120,7 +120,7 @@ export default class ExpressionWrapper extends React.Component<ExpressionWrapper
     }
 
     @computed get chartWidth() {
-        return this.sortedLabels.length * (this.widthThreshold ? 25 : 110) + 200;
+        return this.sortedLabels.length * (this.widthThreshold ? 30 : 110) + 200;
     }
 
     @computed get widthThreshold(){
