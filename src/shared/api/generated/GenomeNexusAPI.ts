@@ -1754,6 +1754,57 @@ export default class GenomeNexusAPI {
      * @param {string} proteinId - An Ensembl protein ID. For example ENSP00000439985
      * @param {string} hugoSymbol - A Hugo Symbol For example ARF5
      */
+    fetchEnsemblTranscriptsGETWithHttpInfo(parameters: {
+        'geneId' ? : string,
+        'proteinId' ? : string,
+        'hugoSymbol' ? : string,
+        $queryParameters ? : any,
+            $domain ? : string
+    }): Promise < request.Response > {
+        const domain = parameters.$domain ? parameters.$domain : this.domain;
+        const errorHandlers = this.errorHandlers;
+        const request = this.request;
+        let path = '/ensembl/transcript';
+        let body: any;
+        let queryParameters: any = {};
+        let headers: any = {};
+        let form: any = {};
+        return new Promise(function(resolve, reject) {
+            headers['Accept'] = 'application/json';
+            headers['Content-Type'] = 'application/json';
+
+            if (parameters['geneId'] !== undefined) {
+                queryParameters['geneId'] = parameters['geneId'];
+            }
+
+            if (parameters['proteinId'] !== undefined) {
+                queryParameters['proteinId'] = parameters['proteinId'];
+            }
+
+            if (parameters['hugoSymbol'] !== undefined) {
+                queryParameters['hugoSymbol'] = parameters['hugoSymbol'];
+            }
+
+            if (parameters.$queryParameters) {
+                Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                    var parameter = parameters.$queryParameters[parameterName];
+                    queryParameters[parameterName] = parameter;
+                });
+            }
+
+            request('GET', domain + path, body, headers, queryParameters, form, reject, resolve, errorHandlers);
+
+        });
+    };
+
+    /**
+     * Retrieves Ensembl Transcripts by protein ID, and gene ID. Retrieves all transcripts in case no query parameter provided
+     * @method
+     * @name GenomeNexusAPI#fetchEnsemblTranscriptsGET
+     * @param {string} geneId - An Ensembl gene ID. For example ENSG00000136999
+     * @param {string} proteinId - An Ensembl protein ID. For example ENSP00000439985
+     * @param {string} hugoSymbol - A Hugo Symbol For example ARF5
+     */
     fetchEnsemblTranscriptsGET(parameters: {
             'geneId' ? : string,
             'proteinId' ? : string,
