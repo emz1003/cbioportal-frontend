@@ -1765,6 +1765,134 @@ export default class GenomeNexusAPIInternal {
             return response.body;
         });
     };
+    
+    postMyVariantInfoAnnotationURL(parameters: {
+        'variants': Array < string > ,
+        $queryParameters ? : any
+    }): string {
+        let queryParameters: any = {};
+        let path = '/my_variant_info';
+
+        if (parameters.$queryParameters) {
+            Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                var parameter = parameters.$queryParameters[parameterName];
+                queryParameters[parameterName] = parameter;
+            });
+        }
+        let keys = Object.keys(queryParameters);
+        return this.domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '');
+    };
+
+    /**
+     * Retrieves myvariant information for the provided list of variants
+     * @method
+     * @name GenomeNexusAPIInternal#postMyVariantInfoAnnotation
+     * @param {} variants - List of variants. For example ["7:g.140453136A>T","12:g.25398285C>A"]
+     */
+    postMyVariantInfoAnnotation(parameters: {
+            'variants': Array < string > ,
+            $queryParameters ? : any,
+            $domain ? : string
+        }): Promise < Array < MyVariantInfo >
+        > {
+            const domain = parameters.$domain ? parameters.$domain : this.domain;
+            const errorHandlers = this.errorHandlers;
+            const request = this.request;
+            let path = '/my_variant_info';
+            let body: any;
+            let queryParameters: any = {};
+            let headers: any = {};
+            let form: any = {};
+            return new Promise(function(resolve, reject) {
+                headers['Accept'] = 'application/json';
+                headers['Content-Type'] = 'application/json';
+
+                if (parameters['variants'] !== undefined) {
+                    body = parameters['variants'];
+                }
+
+                if (parameters['variants'] === undefined) {
+                    reject(new Error('Missing required  parameter: variants'));
+                    return;
+                }
+
+                if (parameters.$queryParameters) {
+                    Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                        var parameter = parameters.$queryParameters[parameterName];
+                        queryParameters[parameterName] = parameter;
+                    });
+                }
+
+                request('POST', domain + path, body, headers, queryParameters, form, reject, resolve, errorHandlers);
+
+            }).then(function(response: request.Response) {
+                return response.body;
+            });
+        };
+
+    fetchMyVariantInfoAnnotationGETURL(parameters: {
+        'variant': string,
+        $queryParameters ? : any
+    }): string {
+        let queryParameters: any = {};
+        let path = '/my_variant_info/{variant}';
+
+        path = path.replace('{variant}', parameters['variant'] + '');
+
+        if (parameters.$queryParameters) {
+            Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                var parameter = parameters.$queryParameters[parameterName];
+                queryParameters[parameterName] = parameter;
+            });
+        }
+        let keys = Object.keys(queryParameters);
+        return this.domain + path + (keys.length > 0 ? '?' + (keys.map(key => key + '=' + encodeURIComponent(queryParameters[key])).join('&')) : '');
+    };
+
+    /**
+     * Retrieves myvariant information for the provided list of variants
+     * @method
+     * @name GenomeNexusAPIInternal#fetchMyVariantInfoAnnotationGET
+     * @param {string} variant - A variants. For example 7:g.140453136A>T
+     */
+    fetchMyVariantInfoAnnotationGET(parameters: {
+        'variant': string,
+        $queryParameters ? : any,
+        $domain ? : string
+    }): Promise < MyVariantInfo > {
+        const domain = parameters.$domain ? parameters.$domain : this.domain;
+        const errorHandlers = this.errorHandlers;
+        const request = this.request;
+        let path = '/my_variant_info/{variant}';
+        let body: any;
+        let queryParameters: any = {};
+        let headers: any = {};
+        let form: any = {};
+        return new Promise(function(resolve, reject) {
+            headers['Accept'] = 'application/json';
+            headers['Content-Type'] = 'application/json';
+
+            path = path.replace('{variant}', parameters['variant'] + '');
+
+            if (parameters['variant'] === undefined) {
+                reject(new Error('Missing required  parameter: variant'));
+                return;
+            }
+
+            if (parameters.$queryParameters) {
+                Object.keys(parameters.$queryParameters).forEach(function(parameterName) {
+                    var parameter = parameters.$queryParameters[parameterName];
+                    queryParameters[parameterName] = parameter;
+                });
+            }
+
+            request('GET', domain + path, body, headers, queryParameters, form, reject, resolve, errorHandlers);
+
+        }).then(function(response: request.Response) {
+            return response.body;
+        });
+    };
+
     fetchGeneXrefsGET_1URL(parameters: {
         'accession': string,
         $queryParameters ? : any
