@@ -3,9 +3,12 @@ import annotationStyles from "./../styles/annotation.module.scss";
 import classNames from 'classnames';
 import {MyVariantInfo as MyVariantInfoData} from 'shared/api/generated/GenomeNexusAPIInternal';
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 import myVariantInfoColumn from "./styles/MyVariantInfoColumn.module.scss";
 >>>>>>> new dbsnp rsid column
+=======
+>>>>>>> import fix
 
 export interface IMyVariantInfoProps {
     myVariantInfo: MyVariantInfoData;
@@ -27,6 +30,9 @@ export default class MyVariantInfo extends React.Component<IMyVariantInfoProps, 
             <span className={`${annotationStyles["annotation-item-text"]}`}/>
         )
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> import fix
         if (this.props.myVariantInfo && this.props.myVariantInfo.dbsnp && this.props.myVariantInfo.dbsnp.rsid !== null) {
             mviContent = (
                 <span className={classNames(annotationStyles["annotation-item-text"])}>

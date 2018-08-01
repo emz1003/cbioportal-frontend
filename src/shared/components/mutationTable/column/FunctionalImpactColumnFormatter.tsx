@@ -12,8 +12,15 @@ import mutationAssessorStyles from "shared/components/annotation/genomeNexus/sty
 import polyPhen2Styles from "shared/components/annotation/genomeNexus/styles/polyPhen2Tooltip.module.scss";
 import siftStyles from "shared/components/annotation/genomeNexus/styles/siftTooltip.module.scss";
 import annotationStyles from "shared/components/annotation/styles/annotation.module.scss";
+<<<<<<< HEAD
 import DefaultTooltip from 'shared/components/defaultTooltip/DefaultTooltip';
 import { default as TableCellStatusIndicator, TableCellStatus } from "shared/components/TableCellStatus";
+=======
+import MobxPromise from 'mobxpromise';
+import { VariantAnnotation } from 'shared/api/generated/GenomeNexusAPI';
+import { extractGenomicLocation, genomicLocationString } from 'shared/lib/MutationUtils';
+import DefaultTooltip from 'shared/components/defaultTooltip/DefaultTooltip';
+>>>>>>> import fix
 
 
 type FunctionalImpactColumnTooltipProps = {
