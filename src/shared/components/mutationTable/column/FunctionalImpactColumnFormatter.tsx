@@ -260,21 +260,19 @@ export default class FunctionalImpactColumnFormatter {
         );
     }
 
-    public static getData(genomeNexusData: GenomeNexusCacheDataType | null): IFunctionalImpactData | null
+    public static getData(genomeNexusData: VariantAnnotation | null): IFunctionalImpactData | null
     {
-        if (genomeNexusData === null ||
-            genomeNexusData.status === "error" ||
-            genomeNexusData.data === null)
+        if (genomeNexusData === null)
         {
             return null;
         }
 
         // TODO: handle multiple transcripts instead of just picking the first one
-        const mutationAssessor = genomeNexusData.data.mutation_assessor && genomeNexusData.data.mutation_assessor.annotation;
-        const siftScore = genomeNexusData.data.transcript_consequences[0].sift_score;
-        const siftPrediction = genomeNexusData.data.transcript_consequences[0].sift_prediction;
-        const polyPhenScore = genomeNexusData.data.transcript_consequences[0].polyphen_score;
-        const polyPhenPrediction = genomeNexusData.data.transcript_consequences[0].polyphen_prediction;
+        const mutationAssessor = genomeNexusData.mutation_assessor && genomeNexusData.mutation_assessor.annotation;
+        const siftScore = genomeNexusData.transcript_consequences[0].sift_score;
+        const siftPrediction = genomeNexusData.transcript_consequences[0].sift_prediction;
+        const polyPhenScore = genomeNexusData.transcript_consequences[0].polyphen_score;
+        const polyPhenPrediction = genomeNexusData.transcript_consequences[0].polyphen_prediction;
 
         return {
             mutationAssessor,
@@ -285,8 +283,8 @@ export default class FunctionalImpactColumnFormatter {
         };
     }
 
-    public static renderFunction(data:Mutation[], genomeNexusCache:GenomeNexusCache) {
-        const genomeNexusData = FunctionalImpactColumnFormatter.getGenomeNexusData(data, genomeNexusCache);
+    public static renderFunction(data:Mutation[], indexedVariantAnnotations:MobxPromise<{[genomicLocation: string]: VariantAnnotation}|undefined>) {
+        const genomeNexusData = FunctionalImpactColumnFormatter.getGenomeNexusData(data, indexedVariantAnnotations);
         return (
                 <div>
                     {FunctionalImpactColumnFormatter.makeFunctionalImpactViz(genomeNexusData)}
@@ -294,9 +292,9 @@ export default class FunctionalImpactColumnFormatter {
         );
     }
 
-    public static download(data:Mutation[], genomeNexusCache:GenomeNexusCache): string
+    public static download(data:Mutation[], indexedVariantAnnotations:MobxPromise<{[genomicLocation: string]: VariantAnnotation}|undefined>): string
     {
-        const genomeNexusData = FunctionalImpactColumnFormatter.getGenomeNexusData(data, genomeNexusCache);
+        const genomeNexusData = FunctionalImpactColumnFormatter.getGenomeNexusData(data, indexedVariantAnnotations);
         const functionalImpactData = FunctionalImpactColumnFormatter.getData(genomeNexusData);
 
         if (!functionalImpactData) {
@@ -310,21 +308,24 @@ export default class FunctionalImpactColumnFormatter {
         ].join(";");
     }
 
-    private static getGenomeNexusData(data:Mutation[], cache:GenomeNexusCache):GenomeNexusCacheDataType | null {
-        if (data.length === 0) {
+    private static getGenomeNexusData(data:Mutation[], indexedVariantAnnotations:MobxPromise<{[genomicLocation: string]: VariantAnnotation}|undefined>):VariantAnnotation | null {
+        if (data.length === 0 || indexedVariantAnnotations.result === undefined) {
             return null;
         }
-        return cache.get(data[0]);
+        const genomicLocation = extractGenomicLocation(data[0]);
+        const variantAnnotation = genomicLocation ?
+            indexedVariantAnnotations.result[genomicLocationString(genomicLocation)] : null;
+        return variantAnnotation;
     }
 
     private static makeFunctionalImpactViz(genomeNexusData:GenomeNexusCacheDataType | null) {
         let status:TableCellStatus | null = null;
 
-        if (genomeNexusData === null) {
+        if (indexedVariantAnnotations.status === "pending") {
             status = TableCellStatus.LOADING;
-        } else if (genomeNexusData.status === "error") {
+        } else if (indexedVariantAnnotations.status === "error") {
             status = TableCellStatus.ERROR;
-        } else if (genomeNexusData.data === null) {
+        } else if (genomeNexusData === null) {
             status = TableCellStatus.NA;
         } else {
             const functionalImpactData = FunctionalImpactColumnFormatter.getData(genomeNexusData);

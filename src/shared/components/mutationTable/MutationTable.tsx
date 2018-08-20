@@ -50,7 +50,6 @@ export interface IMutationTableProps {
     molecularProfileIdToMolecularProfile?: {[molecularProfileId:string]:MolecularProfile};
     discreteCNACache?:DiscreteCNACache;
     oncoKbEvidenceCache?:OncoKbEvidenceCache;
-    genomeNexusEnrichmentCache?:GenomeNexusEnrichmentCache;
     mrnaExprRankCache?:MrnaExprRankCache;
     variantCountCache?:VariantCountCache;
     pubMedCache?:PubMedCache;
@@ -64,6 +63,7 @@ export interface IMutationTableProps {
     enableDbsnp?: boolean;
     myCancerGenomeData?: IMyCancerGenomeData;
     hotspotData?: IHotspotDataWrapper;
+    indexedVariantAnnotations?: MobxPromise<{ [genomicLocation: string]: VariantAnnotation; } | undefined>;
     cosmicData?:ICosmicData;
     oncoKbData?: IOncoKbDataWrapper;
     oncoKbAnnotatedGenes:{[entrezGeneId:number]:boolean};
@@ -417,11 +417,11 @@ export default class MutationTable<P extends IMutationTableProps> extends React.
 
         this._columns[MutationTableColumnType.FUNCTIONAL_IMPACT] = {
             name:"Functional Impact",
-            render:(d:Mutation[])=>(this.props.genomeNexusEnrichmentCache
-                ? FunctionalImpactColumnFormatter.renderFunction(d, this.props.genomeNexusEnrichmentCache as GenomeNexusEnrichmentCache)
+            render:(d:Mutation[])=>(this.props.indexedVariantAnnotations
+                ? FunctionalImpactColumnFormatter.renderFunction(d, this.props.indexedVariantAnnotations as MobxPromise<{ [genomicLocation: string]: VariantAnnotation; } | undefined>)
                 : (<span></span>)),
             download: (d:Mutation[]) => FunctionalImpactColumnFormatter.download(
-                d, this.props.genomeNexusEnrichmentCache as GenomeNexusEnrichmentCache),
+                d, this.props.indexedVariantAnnotations as MobxPromise<{ [genomicLocation: string]: VariantAnnotation; } | undefined>),
             headerRender: FunctionalImpactColumnFormatter.headerRender,
             visible: false,
             shouldExclude: () => !this.props.enableFunctionalImpact
