@@ -1,22 +1,21 @@
-import * as React from 'react';
 import { Circle } from "better-react-spinkit";
 import classNames from 'classnames';
 import 'rc-tooltip/assets/bootstrap_white.css';
+import * as React from 'react';
 import * as React from 'react';
 import { Mutation } from "shared/api/generated/CBioPortalAPI";
 import { VariantAnnotation } from 'shared/api/generated/GenomeNexusAPI';
 import { MutationAssessor as MutationAssessorData } from 'shared/api/generated/GenomeNexusAPIInternal';
 import GenomeNexusCache, { GenomeNexusCacheDataType } from "shared/cache/GenomeNexusCache";
 import MutationAssessor from "shared/components/annotation/genomeNexus/MutationAssessor";
-import Sift from "shared/components/annotation/genomeNexus/Sift";
 import PolyPhen2 from "shared/components/annotation/genomeNexus/PolyPhen2";
-import siftStyles from "shared/components/annotation/genomeNexus/styles/siftTooltip.module.scss";
-import polyPhen2Styles from "shared/components/annotation/genomeNexus/styles/polyPhen2Tooltip.module.scss";
+import Sift from "shared/components/annotation/genomeNexus/Sift";
 import mutationAssessorStyles from "shared/components/annotation/genomeNexus/styles/mutationAssessorColumn.module.scss";
+import polyPhen2Styles from "shared/components/annotation/genomeNexus/styles/polyPhen2Tooltip.module.scss";
+import siftStyles from "shared/components/annotation/genomeNexus/styles/siftTooltip.module.scss";
 import annotationStyles from "shared/components/annotation/styles/annotation.module.scss";
 import DefaultTooltip from 'shared/components/defaultTooltip/DefaultTooltip';
 import { default as TableCellStatusIndicator, TableCellStatus } from "shared/components/TableCellStatus";
-
 
 type FunctionalImpactColumnTooltipProps = {
     active: 'mutationAssessor' | 'sift' | 'polyPhen2';
@@ -35,7 +34,7 @@ interface IFunctionalImpactData {
 }
 
 class FunctionalImpactColumnTooltip extends React.Component<FunctionalImpactColumnTooltipProps, IFunctionalImpactColumnTooltipState> {
-    constructor(props:FunctionalImpactColumnTooltipProps) {
+    constructor(props: FunctionalImpactColumnTooltipProps) {
         super(props);
         this.state = {
             active: this.props.active
@@ -54,7 +53,7 @@ class FunctionalImpactColumnTooltip extends React.Component<FunctionalImpactColu
                                 {/*
                                 <span
                                     style={{display:'inline-block',width:22}}
-                                    title='Mutation Assessor'
+                                    title='Mutation Asessor'
                                     onMouseOver={() => this.setState({active:'mutationAssessor'})}
                                 >
                                     <img
@@ -66,9 +65,9 @@ class FunctionalImpactColumnTooltip extends React.Component<FunctionalImpactColu
                             </th> */}
                             <th>
                                 <span
-                                    style={{display:'inline-block',width:22}}
+                                    style={{ display: 'inline-block', width: 22 }}
                                     title='SIFT'
-                                    onMouseOver={() => this.setState({active:'sift'})}
+                                    onMouseOver={() => this.setState({ active: 'sift' })}
                                 >
                                     <img
                                         height={14} width={14}
@@ -79,9 +78,9 @@ class FunctionalImpactColumnTooltip extends React.Component<FunctionalImpactColu
                             </th>
                             <th>
                                 <span
-                                    style={{display:'inline-block',width:22}}
+                                    style={{ display: 'inline-block', width: 22 }}
                                     title='PolyPhen-2'
-                                    onMouseOver={() => this.setState({active:'polyPhen2'})}
+                                    onMouseOver={() => this.setState({ active: 'polyPhen2' })}
                                 >
                                     <img
                                         height={14} width={14}
@@ -147,30 +146,30 @@ class FunctionalImpactColumnTooltip extends React.Component<FunctionalImpactColu
     }
 
     public static mutationAssessorText() {
-        return <div style={{width:450,height:100}}><a
-        href={MutationAssessor.MUTATION_ASSESSOR_URL} target="_blank">Mutation
+        return <div style={{ width: 450, height: 100 }}><a
+            href={MutationAssessor.MUTATION_ASSESSOR_URL} target="_blank">Mutation
         Assessor</a> predicts the functional impact of amino-acid substitutions
-        in proteins, such as mutations discovered in cancer or missense
-        polymorphisms. The functional impact is assessed based on evolutionary
-        conservation of the affected amino acid in protein homologs. The method
-        has been validated on a large set (60k) of disease associated (OMIM)
+            in proteins, such as mutations discovered in cancer or missense
+            polymorphisms. The functional impact is assessed based on evolutionary
+            conservation of the affected amino acid in protein homologs. The method
+            has been validated on a large set (60k) of disease associated (OMIM)
         and polymorphic variants.</div>;
     }
 
     public static siftText() {
-        return <div style={{width:450,height:100}}><a href={Sift.SIFT_URL}
-        target="_blank">SIFT</a> predicts whether an amino acid substitution
-        affects protein function based on sequence homology and the physical
-        properties of amino acids. SIFT can be applied to naturally occurring
-        nonsynonymous polymorphisms and laboratory-induced missense
+        return <div style={{ width: 450, height: 100 }}><a href={Sift.SIFT_URL}
+            target="_blank">SIFT</a> predicts whether an amino acid substitution
+            affects protein function based on sequence homology and the physical
+            properties of amino acids. SIFT can be applied to naturally occurring
+            nonsynonymous polymorphisms and laboratory-induced missense
         mutations.</div>;
     }
 
     public static polyPhen2Text() {
-        return <div style={{width:450,height:100}}><a href={PolyPhen2.POLYPHEN2_URL}
-        target="_blank">PolyPhen-2</a> (Polymorphism Phenotyping v2) is a tool
-        which predicts possible impact of an amino acid substitution on the
-        structure and function of a human protein using straightforward
+        return <div style={{ width: 450, height: 100 }}><a href={PolyPhen2.POLYPHEN2_URL}
+            target="_blank">PolyPhen-2</a> (Polymorphism Phenotyping v2) is a tool
+            which predicts possible impact of an amino acid substitution on the
+            structure and function of a human protein using straightforward
         physical and comparative considerations.</div>;
     }
 
@@ -199,9 +198,9 @@ export function placeArrow(tooltipEl: any) {
 }
 
 export default class FunctionalImpactColumnFormatter {
-    
+
     public static headerRender(name: string) {
-        const arrowContent = <div className="rc-tooltip-arrow-inner"  />;
+        const arrowContent = <div className="rc-tooltip-arrow-inner" />;
         return (
             <div>
                 {name}<br />
@@ -231,7 +230,7 @@ export default class FunctionalImpactColumnFormatter {
                         destroyTooltipOnHide={true}
                         onPopupAlign={placeArrow}
                     >
-                        <span style={{display:'inline-block',width:22}}>
+                        <span style={{ display: 'inline-block', width: 22 }}>
                             <img
                                 height={14} width={14}
                                 src={require("./siftFunnel.png")}
@@ -248,7 +247,7 @@ export default class FunctionalImpactColumnFormatter {
                         destroyTooltipOnHide={true}
                         onPopupAlign={placeArrow}
                     >
-                        <span style={{display:'inline-block',width:22}}>
+                        <span style={{ display: 'inline-block', width: 22 }}>
                             <img
                                 height={14} width={14}
                                 src={require("./polyPhen-2.png")}
@@ -350,7 +349,7 @@ export default class FunctionalImpactColumnFormatter {
         if (status !== null) {
             // show loading circle
             if (status === TableCellStatus.LOADING) {
-                return <Circle size={18} scaleEnd={0.5} scaleStart={0.2} color="#aaa" className="pull-left"/>;
+                return <Circle size={18} scaleEnd={0.5} scaleStart={0.2} color="#aaa" className="pull-left" />;
             } else {
                 return (<TableCellStatusIndicator
                     status={status}

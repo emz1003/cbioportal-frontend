@@ -1,27 +1,27 @@
 import * as React from "react";
-import {CoExpression} from "../../../shared/api/generated/CBioPortalAPIInternal";
-import {correlationColor, correlationSortBy, cytobandFilter} from "./CoExpressionTableUtils";
+import { CoExpression } from "../../../shared/api/generated/CBioPortalAPIInternal";
+import { correlationColor, correlationSortBy } from "./CoExpressionTableUtils";
 import LazyMobXTable from "../../../shared/components/lazyMobXTable/LazyMobXTable";
-import {ILazyMobXTableApplicationDataStore} from "../../../shared/lib/ILazyMobXTableApplicationDataStore";
-import {CoExpressionDataStore, TableMode} from "./CoExpressionViz";
+import { ILazyMobXTableApplicationDataStore } from "../../../shared/lib/ILazyMobXTableApplicationDataStore";
+import { CoExpressionDataStore, TableMode } from "./CoExpressionViz";
 import Select from "react-select";
 import {observer} from "mobx-react";
 import {observable} from "mobx"
 import {CoExpressionWithQ, tableSearchInformation} from "./CoExpressionTabUtils";
 import DefaultTooltip from "../../../shared/components/defaultTooltip/DefaultTooltip";
 import InfoIcon from "../../../shared/components/InfoIcon";
-import {bind} from "bind-decorator";
+import { bind } from "bind-decorator";
 import { cytobandFilter } from "pages/resultsView/ResultsViewTableUtils";
-import {PotentialViewType} from "../plots/PlotsTab";
-import {PLOT_SIDELENGTH} from "../plots/PlotsTabUtils";
+import { PotentialViewType } from "../plots/PlotsTab";
+import { PLOT_SIDELENGTH } from "../plots/PlotsTabUtils";
 import { toConditionalPrecision } from "shared/lib/NumberUtils";
 import { formatSignificanceValueWithStyle } from "shared/lib/FormatUtils";
 
 export interface ICoExpressionTableProps {
-    referenceGene:{hugoGeneSymbol:string, cytoband:string};
-    dataStore:CoExpressionDataStore;
-    tableMode:TableMode;
-    onSelectTableMode:(t:TableMode)=>void;
+    referenceGene: { hugoGeneSymbol: string, cytoband: string };
+    dataStore: CoExpressionDataStore;
+    tableMode: TableMode;
+    onSelectTableMode: (t: TableMode) => void;
 }
 
 const SPEARMANS_CORRELATION_COLUMN_NAME = "Spearman's Correlation";
@@ -31,19 +31,19 @@ const Q_VALUE_COLUMN_NAME = "q-Value";
 const COLUMNS = [
     {
         name: "Correlated Gene",
-        render: (d:CoExpression)=>(<span style={{fontWeight:"bold"}}>{d.hugoGeneSymbol}</span>),
-        filter:(d:CoExpression, f:string, filterStringUpper:string)=>(d.hugoGeneSymbol.indexOf(filterStringUpper) > -1),
-        download:(d:CoExpression)=>d.hugoGeneSymbol,
-        sortBy:(d:CoExpression)=>d.hugoGeneSymbol,
-        width:"30%"
+        render: (d: CoExpression) => (<span style={{ fontWeight: "bold" }}>{d.hugoGeneSymbol}</span>),
+        filter: (d: CoExpression, f: string, filterStringUpper: string) => (d.hugoGeneSymbol.indexOf(filterStringUpper) > -1),
+        download: (d: CoExpression) => d.hugoGeneSymbol,
+        sortBy: (d: CoExpression) => d.hugoGeneSymbol,
+        width: "30%"
     },
     {
-        name:"Cytoband",
-        render:(d:CoExpression)=>(<span>{d.cytoband}</span>),
-        filter:cytobandFilter,
-        download:(d:CoExpression)=>d.cytoband,
-        sortBy:(d:CoExpression)=>d.cytoband,
-        width:"30%"
+        name: "Cytoband",
+        render: (d: CoExpression) => (<span>{d.cytoband}</span>),
+        filter: cytobandFilter,
+        download: (d: CoExpression) => d.cytoband,
+        sortBy: (d: CoExpression) => d.cytoband,
+        width: "30%"
     },
     makeNumberColumn(SPEARMANS_CORRELATION_COLUMN_NAME, "spearmansCorrelation", true, false),
     Object.assign(makeNumberColumn(P_VALUE_COLUMN_NAME, "pValue", false, false), {
@@ -67,7 +67,7 @@ function makeNumberColumn(name:string, key:keyof CoExpressionWithQ, colorByValue
                         float:"right",
                         whiteSpace:"nowrap"
                     }}
-                >{formatSignificance? formatSignificanceValueWithStyle(d[key] as number) : toConditionalPrecision((d[key] as number), 3, 0.01)}</span>
+                >{formatSignificance ? formatSignificanceValueWithStyle(d[key] as number) : toConditionalPrecision((d[key] as number), 3, 0.01)}</span>
             );
         },
         download:(d:CoExpressionWithQ)=>(d[key] as number).toString()+"",
@@ -85,7 +85,7 @@ export default class CoExpressionTable extends React.Component<ICoExpressionTabl
     }
 
     @bind
-    private onSelectTableMode(d:any) {
+    private onSelectTableMode(d: any) {
         this.props.onSelectTableMode(d.value);
     }
 
@@ -112,9 +112,9 @@ export default class CoExpressionTable extends React.Component<ICoExpressionTabl
         return (
             <div>
                 <div
-                    style={{float:"left", display:"flex", flexDirection:"row"}}
+                    style={{ float: "left", display: "flex", flexDirection: "row" }}
                 >
-                    <div style={{width:180}}>
+                    <div style={{ width: 180 }}>
                         <Select
                             value={this.props.tableMode}
                             onChange={this.onSelectTableMode}
@@ -125,8 +125,8 @@ export default class CoExpressionTable extends React.Component<ICoExpressionTabl
                         />
                     </div>
                     <InfoIcon
-                        style={{marginLeft:21, marginTop:"0.7em"}}
-                        tooltip={<div style={{maxWidth:200}}>{tableSearchInformation}</div>}
+                        style={{ marginLeft: 21, marginTop: "0.7em" }}
+                        tooltip={<div style={{ maxWidth: 200 }}>{tableSearchInformation}</div>}
                         tooltipPlacement="left"
                     />
                 </div>
